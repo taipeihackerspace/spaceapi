@@ -24,7 +24,7 @@ server.listen(port, function(){
 });
 
 
-app.get('/', function(req, res){
+app.get('*', function(req, res){
     var out = {
 	api: '0.13',
 	space: nconf.get('space'),
