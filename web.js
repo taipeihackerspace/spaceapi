@@ -29,10 +29,12 @@ app.get('*', function(req, res){
 	space: nconf.get('space'),
 	logo: nconf.get('logo'),
 	url: nconf.get('url'),
-	location : nconf.get('location'),
+	location: nconf.get('location'),
 	state: nconf.get('state'),
-	contact : nconf.get('contact'),
-	issue_report_channels : nconf.get('issue_report_channels')
+	contact: nconf.get('contact'),
+	issue_report_channels: nconf.get('issue_report_channels'),
+	feeds: nconf.get('feeds'),
+	projects: nconf.get('projects')
     }
 
     out.state.open = null;
