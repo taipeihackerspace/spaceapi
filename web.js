@@ -9,7 +9,6 @@ nconf.argv()
      .env()
      .file({ file: 'config.json' });
 
-
 // Set up web interface
 var app = express();
 app.use(express.logger());
@@ -31,13 +30,38 @@ app.get('*', function(req, res){
 	logo: nconf.get('logo'),
 	url: nconf.get('url'),
 	location : nconf.get('location'),
-	state: {
-	    open: null
-	},
+	state: nconf.get('state'),
 	contact : nconf.get('contact'),
 	issue_report_channels : nconf.get('issue_report_channels')
     }
-    res.json(out);
+
+    out.state.open = null;
+
+    http.get(nconf.get('OPENURL'), function(scraperes) {
+	var body = '';
+
+	scraperes.on('data', function(chunk) {
+            body += chunk;
+	});
+
+	scraperes.on('end', function() {
+            var response = JSON.parse(body)
+	    var openstatus = false;
+	    if (response.people.length > 0) {
+		openstatus = true;
+	    }
+	    out.state.open = openstatus;
+
+	    // api v12 compatibility
+	    out.open = openstatus;
+	    out.icon = out.state.icon;
+
+	    res.json(out);
+	});
+    }).on('error', function(e) {
+	console.log("Error getting open status");
+	res.json(out);
+    });
 });
 
 var allowCrossDomain = function(req, res, next) {
