@@ -9,8 +9,8 @@
     },
     "state" : {
 	"icon" : {
-	    "open" : "http://tpehack.no-ip.biz/img/icons/check32.png",
-	    "closed" : "http://tpehack.no-ip.biz/img/icons/sleep32.png"
+	    "open" : "http://tpehack.no-ip.biz/img/icons/open.png",
+	    "closed" : "http://tpehack.no-ip.biz/img/icons/closed.png"
 	},
 	"message": "There might still be someone who's not checked in, to be sure you can always call."
     },
