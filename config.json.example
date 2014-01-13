@@ -40,6 +40,7 @@
 	}
     },
     "projects": ["https://github.com/taipeihackerspace/"],
+    "ext_donation": [ {"type": "BTC", "receiver": "13YKKSqKPZoAnHP5uceqnVNYeJoH1wud7Z"}],
     "PORT": 12100,
     "OPENURL": "http://tpehack.no-ip.biz/checkin/inspace"
 }

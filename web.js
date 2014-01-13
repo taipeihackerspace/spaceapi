@@ -34,7 +34,8 @@ app.get('*', function(req, res){
 	contact: nconf.get('contact'),
 	issue_report_channels: nconf.get('issue_report_channels'),
 	feeds: nconf.get('feeds'),
-	projects: nconf.get('projects')
+	projects: nconf.get('projects'),
+	ext_donation: nconf.get('ext_donation')
     }
 
     out.state.open = null;
