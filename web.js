@@ -54,9 +54,14 @@ app.get('*', function(req, res){
 	    }
 	    out.state.open = openstatus;
 
+            if (out.state.open) {
+                out.state.message = "Open for public";
+            }
+
 	    // api v12 compatibility
-	    out.open = openstatus;
+	    out.open = out.state.open;
 	    out.icon = out.state.icon;
+            out.status = out.state.message;
 
 	    res.json(out);
 	});
