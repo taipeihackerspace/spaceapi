@@ -22,6 +22,13 @@ server.listen(port, function(){
   console.log("Express server listening on port " + port);
 });
 
+// http://stackoverflow.com/questions/11181546/node-js-express-cross-domain-scripting
+app.all('/', function(req, res, next) {
+  res.header("Cache-Control", "no-cache");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 
 app.get('*', function(req, res){
     var out = {
@@ -71,9 +78,3 @@ app.get('*', function(req, res){
 	res.json(out);
     });
 });
-
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
-    next();
-};
-app.use(allowCrossDomain);
