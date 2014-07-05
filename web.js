@@ -2,6 +2,7 @@ var fs = require('fs')
   , nconf = require('nconf')
   , express = require('express')
   , http = require('http')
+  , request = require('request')
   ;
 
 // Configuration
@@ -47,14 +48,8 @@ app.get('*', function(req, res){
 
     out.state.open = null;
 
-    http.get(nconf.get('OPENURL'), function(scraperes) {
-	var body = '';
-
-	scraperes.on('data', function(chunk) {
-            body += chunk;
-	});
-
-	scraperes.on('end', function() {
+    request.get(nconf.get('OPENURL'), function (error, response, body) {
+	if (!error && response.statusCode == 200) {
             var response = JSON.parse(body)
 	    var openstatus = false;
 	    if (response.people.length > 0) {
@@ -63,7 +58,9 @@ app.get('*', function(req, res){
 	    out.state.open = openstatus;
 
             if (out.state.open) {
-                out.state.message = "Open for public";
+                var numppl = response.people.length;
+                var pplmsg = (numppl > 1) ? numppl + ' people are' : numppl + " person is";
+                out.state.message = "Open for public, at least " + pplmsg + " there." ;
             }
 
 	    // api v12 compatibility
@@ -72,9 +69,8 @@ app.get('*', function(req, res){
             out.status = out.state.message;
 
 	    res.json(out);
-	});
-    }).on('error', function(e) {
-	console.log("Error getting open status");
-	res.json(out);
+	} else {
+
+	}
     });
 });
